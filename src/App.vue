@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <wheel />
+    {{ selectedName }}
+
+    <wheel :names="['1', '2', '3']" @change="selectedName = $event" />
   </div>
 </template>
 
@@ -11,6 +13,12 @@ export default {
   name: 'App',
   components: {
     Wheel,
+  },
+
+  data() {
+    return {
+      selectedName: '',
+    };
   },
 };
 </script>

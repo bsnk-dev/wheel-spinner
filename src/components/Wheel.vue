@@ -2,12 +2,6 @@
   <div
     style="display: flex; width: 99vw; height: 100vh; flex-direction: column"
   >
-    <div>
-      {{ selectedName }}
-    </div>
-    <div>
-      <input type="range" min="0" max="90" v-model="numberOfNamesRange" />
-    </div>
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()">
         <div
@@ -26,7 +20,7 @@
           }"
           v-for="i of numberOfNames"
         >
-          <div class="name">Name {{ i }}</div>
+          <div class="name">{{ names[i - 1] }}</div>
         </div>
       </div>
       <div class="needle" />
@@ -36,16 +30,22 @@
 
 <script>
 export default {
-  name: 'App',
+  name: 'SpinnerWheel',
 
   data() {
     return {
       degrees: 0,
-      numberOfNames: 11,
-      numberOfNamesRange: 6,
+      numberOfNames: 10,
       colorIndex: -1,
       selectedName: '',
     };
+  },
+
+  props: {
+    names: {
+      type: Array,
+      default: ['Name One', 'Two', 'Three', 'Four Five', 'Six'],
+    },
   },
 
   methods: {
@@ -89,13 +89,19 @@ export default {
         (360 - currentDegrees + degreeInterval * 0.4) / degreeInterval;
       const index = Math.floor(wedge);
 
-      this.selectedName = `Name ${index}`;
+      if (index === 0) index = this.names.length - 1;
+
+      this.selectedName = this.names[index - 1];
     },
   },
 
+  mounted() {
+    this.numberOfNames = this.names.length;
+  },
+
   watch: {
-    numberOfNamesRange() {
-      this.numberOfNames = Number(this.numberOfNamesRange);
+    selectedName() {
+      this.$emit('change', this.selectedName);
     },
   },
 };

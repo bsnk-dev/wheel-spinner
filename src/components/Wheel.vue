@@ -12,7 +12,6 @@
       <div class="wheel-container" ref="wheel" @click="spinWheel()">
         <div
           class="wedge"
-          :class="wedgeColor()"
           :style="{
             transform: 'rotate(' + i * (360 / numberOfNames) + 'deg)',
             'border-top-width':
@@ -23,6 +22,7 @@
               (3.14 * (300 + circumferenceInset(numberOfNames))) /
                 numberOfNames +
               'px',
+            'border-right-color': wedgeColor(),
           }"
           v-for="i of numberOfNames"
         >
@@ -61,7 +61,7 @@ export default {
     },
 
     wedgeColor() {
-      const colors = ['red', 'green', 'yellow', 'blue'];
+      const colors = ['#59CD90', '#EE6352', '#3FA7D6', '#FAC05E', '#F79D84'];
       this.colorIndex++;
       if (this.colorIndex >= colors.length) this.colorIndex = 0;
       return colors[this.colorIndex];

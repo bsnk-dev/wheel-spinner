@@ -6,7 +6,7 @@
       {{ selectedName }}
     </div>
     <div>
-      <input type="range" min="0" max="20" v-model="numberOfNamesRange" />
+      <input type="range" min="0" max="90" v-model="numberOfNamesRange" />
     </div>
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()">
@@ -67,11 +67,17 @@ export default {
       return colors[this.colorIndex];
     },
 
+    /**
+     * Adds the correct pixel value to the circle circumference calculation for each wedge so that
+     * it can actually fit its place in the circle
+     */
     circumferenceInset(numberOfNames) {
+      // This is a bunch of magical numbers that fix the triangles width so they actually fit their area in the circle.
       return (
-        [0, 0, 0, 200, 82, 47, 32, 22, 17, 14, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1][
-          numberOfNames
-        ] || 0
+        [
+          0, 0, 0, 200, 82, 47, 32, 22, 17, 14, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+          1,
+        ][numberOfNames] || 0
       );
     },
 
@@ -79,7 +85,8 @@ export default {
       let currentDegrees = this.degrees % 360;
 
       const degreeInterval = 360 / this.numberOfNames;
-      const wedge = (360 - currentDegrees + 5) / degreeInterval;
+      const wedge =
+        (360 - currentDegrees + degreeInterval * 0.4) / degreeInterval;
       const index = Math.floor(wedge);
 
       this.selectedName = `Name ${index}`;

@@ -3,7 +3,7 @@
     <div class="wheel-name-container">
       <wheel :names="names(10)" @change="selectedName = $event" />
       <div>
-        <h1 class="hover:rotate-90">{{ selectedName }}</h1>
+        <h1>{{ selectedName }}</h1>
       </div>
     </div>
   </div>

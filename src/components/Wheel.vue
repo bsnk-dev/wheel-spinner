@@ -1,7 +1,5 @@
 <template>
-  <div
-    style="display: flex; width: 99vw; height: 100vh; flex-direction: column"
-  >
+  <div style="display: flex; flex-direction: column">
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()">
         <div
@@ -23,7 +21,9 @@
           <div class="name">{{ names[i - 1] }}</div>
         </div>
       </div>
-      <div class="needle" />
+      <div class="needle">
+        <div class="inner-needle" />
+      </div>
     </div>
   </div>
 </template>
@@ -87,11 +87,12 @@ export default {
       const degreeInterval = 360 / this.numberOfNames;
       const wedge =
         (360 - currentDegrees + degreeInterval * 0.4) / degreeInterval;
-      const index = Math.floor(wedge);
+      let index = Math.floor(wedge);
+      index--;
 
-      if (index === 0) index = this.names.length - 1;
+      if (index === -1) index = this.names.length - 1;
 
-      this.selectedName = this.names[index - 1];
+      this.selectedName = this.names[index];
     },
   },
 
@@ -131,12 +132,24 @@ export default {
   width: 0;
   height: 0;
   border-top: 30px solid transparent;
-  border-right: 70px solid grey;
+  border-right: 70px solid lightgrey;
   border-bottom: 30px solid transparent;
   margin-top: auto;
   margin-left: -20px;
   z-index: 5;
   margin-bottom: auto;
+  display: flex;
+}
+
+.inner-needle {
+  width: 0;
+  height: 0;
+  border-top: 25px solid transparent;
+  border-right: 56px solid white;
+  border-bottom: 25px solid transparent;
+  z-index: 10;
+  margin-top: -25px;
+  margin-left: 10px;
 }
 
 .name {

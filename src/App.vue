@@ -1,9 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app flex-column">
+    <div class="flex w-screen">
+      <div class="ml-auto p-4">
+        <Settings />
+      </div>
+    </div>
     <div class="wheel-name-container">
       <wheel :names="names(10)" @change="selectedName = $event" />
       <div>
-        <h1>{{ selectedName }}</h1>
+        <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
       </div>
     </div>
   </div>
@@ -11,11 +16,13 @@
 
 <script>
 import Wheel from './components/Wheel.vue';
+import Settings from './components/SettingsPane.vue';
 
 export default {
   name: 'App',
   components: {
     Wheel,
+    Settings,
   },
 
   data() {
@@ -39,6 +46,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -48,6 +57,7 @@ export default {
   display: flex;
   width: 99vw;
   height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
 body {

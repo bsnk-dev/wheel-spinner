@@ -17,6 +17,7 @@
             'border-right-color': wedgeColor(),
           }"
           v-for="i of numberOfNames"
+          :key="i"
         >
           <div class="name">{{ names[i - 1] }}</div>
         </div>
@@ -44,7 +45,7 @@ export default {
   props: {
     names: {
       type: Array,
-      default: ['Name One', 'Two', 'Three', 'Four Five', 'Six'],
+      default: () => ['Name One', 'Two', 'Three', 'Four Five', 'Six'],
     },
   },
 

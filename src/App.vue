@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       selectedName: 'Click to spin',
+      storedNames: [],
       store,
     };
   },
@@ -43,10 +44,6 @@ export default {
 
     devOverride() {
       return this.store.developerOverride;
-    },
-
-    storedNames() {
-      return this.store.names;
     },
   },
 
@@ -61,6 +58,17 @@ export default {
       return names;
     },
   },
+
+  watch: {
+    'store.names': {
+      handler(val) {
+        this.storedNames = val;
+      },
+
+      deep: true,
+  
+    }
+  }
 };
 </script>
 

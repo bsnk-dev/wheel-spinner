@@ -6,7 +6,10 @@
       </div>
     </div>
     <div class="wheel-name-container">
-      <wheel :names="names(10)" @change="selectedName = $event" />
+      <wheel
+        :names="devOverride ? names(devNameCount) : storedNames"
+        @change="selectedName = $event"
+      />
       <div>
         <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
       </div>
@@ -17,6 +20,7 @@
 <script>
 import Wheel from './components/Wheel.vue';
 import Settings from './components/SettingsPane.vue';
+import store from '@/store.js';
 
 export default {
   name: 'App',
@@ -28,7 +32,22 @@ export default {
   data() {
     return {
       selectedName: 'Click to spin',
+      store,
     };
+  },
+
+  computed: {
+    devNameCount() {
+      return this.store.developerOverrideNameCount;
+    },
+
+    devOverride() {
+      return this.store.developerOverride;
+    },
+
+    storedNames() {
+      return this.store.names;
+    },
   },
 
   methods: {

@@ -6,10 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "tailwind": "vue add tailwind"
+    "tailwind": "tailwind -o ./public/styles.css -i ./tailwind.css -w"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.3.4",
     "@vue/cli": "^4.5.14",
     "@vue/compiler-sfc": "^3.2.20",
     "autoprefixer": "10.3.4",
@@ -18,6 +17,7 @@
     "vue": "3.2.11"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.3.4",
     "@vue/cli-plugin-babel": "^4.4.0",
     "@vue/cli-plugin-eslint": "^4.4.0",
     "@vue/cli-service": "^4.4.0",

@@ -57,6 +57,7 @@
             bg-white
             ring-1 ring-black ring-opacity-5
             focus:outline-none
+            overflow-auto
           "
           role="menu"
           aria-orientation="vertical"
@@ -65,7 +66,7 @@
         >
           <!-- Selection Page -->
           <div class="py-1" role="none" v-if="page == 'select'">
-            <!-- Wheel names property set -->
+            <!-- Wheel names settings button -->
             <div
               class="hover:bg-gray-50 flex items-center p-4 cursor-pointer"
               @click="page = 'wheel-names'"
@@ -94,8 +95,11 @@
               </div>
             </div>
 
-            <!-- Wheel names property set -->
-            <div class="hover:bg-gray-50 flex items-center p-4 cursor-pointer">
+            <!-- Developers settings button -->
+            <div
+              class="hover:bg-gray-50 flex items-center p-4 cursor-pointer"
+              @click="page = 'developer'"
+            >
               <div class="w-20 h-16 bg-green-100 rounded-xl flex">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +125,7 @@
             </div>
           </div>
 
+          <!-- Back Button -->
           <div
             class="
               text-blue-500
@@ -152,11 +157,12 @@
             Back
           </div>
 
+          <!-- Wheel Names Settings -->
           <div class="p-4 pt-0 text-left" v-if="page == 'wheel-names'">
             <h2 class="text-xl font-bold mb-2">Names</h2>
             <textarea
               class="
-                focus:ring-blue-500 focus:border-blue-500
+                focus:ring-yellow-500 focus:border-yellow-500
                 w-full
                 border-gray-400 border-1
                 bg-transparent
@@ -165,7 +171,74 @@
                 rounded-md
                 h-1/3
               "
+              :value="wheelSettings.names"
+              @change="wheelSettings.names = $event.target.value"
             />
+            <label class="inline-flex items-center mt-3">
+              <input
+                type="checkbox"
+                class="
+                  form-checkbox
+                  h-5
+                  w-5
+                  text-yellow-400
+                  rounded-md
+                  focus:ring-yellow-500 focus:border-yellow-500
+                "
+                v-model="wheelSettings.autoHideNames"
+              /><span class="ml-2 text-gray-700 text-sm"
+                >Auto-Hide Selected Names</span
+              >
+            </label>
+            <h2 class="text-xl font-bold mt-2">Hidden Names</h2>
+            <h3 class="text-sm font-medium">
+              Add/delete names from this list to hide or unhide them.
+            </h3>
+            <textarea
+              class="
+                focus:ring-yellow-500 focus:border-yellow-500
+                w-full
+                border-gray-400 border-1
+                bg-transparent
+                text-gray-500
+                sm:text-sm
+                rounded-md
+                h-1/3
+                mt-2
+              "
+              :value="wheelSettings.hiddenNames"
+              @change="wheelSettings.hiddenNames = $event.target.value"
+            />
+          </div>
+
+          <!-- Developer Settings -->
+          <div class="p-4 pt-0 text-left" v-if="page == 'developer'">
+            <h2 class="text-xl font-bold mb-2">Developer Settings</h2>
+            <label class="inline-flex items-center mt-3">
+              <input
+                type="checkbox"
+                class="
+                  form-checkbox
+                  h-5
+                  w-5
+                  text-green-400
+                  rounded-md
+                  focus:ring-green-500 focus:border-green-500
+                "
+                v-model="developer.overrideNames"
+              /><span class="ml-2 text-gray-700 text-sm">Override Names</span>
+            </label>
+            <label class="inline-flex items-center mt-3">
+              <input
+                type="range"
+                min="0"
+                max="90"
+                v-model="developer.nameCount"
+              />
+              <span class="ml-2 text-gray-700 text-sm">
+                Name Count: {{ developer.nameCount }}
+              </span>
+            </label>
           </div>
         </div>
       </div>
@@ -174,6 +247,8 @@
 </template>
 
 <script>
+import store from '@/store.js';
+
 export default {
   name: 'SettingsPane',
 
@@ -181,7 +256,48 @@ export default {
     return {
       open: false,
       page: 'select',
+
+      developer: {
+        overrideNames: false,
+        nameCount: 16,
+      },
+
+      wheelSettings: {
+        names: '',
+        autoHideNames: false,
+        hiddenNames: '',
+      },
     };
+  },
+
+  watch: {
+    'developer.overrideNames': {
+      handler(val) {
+        store.developerOverride = val;
+      },
+    },
+    'developer.nameCount': {
+      handler(val) {
+        store.developerOverrideNameCount = Number(val);
+      },
+    },
+
+    'wheelSettings.names': {
+      handler(val) {
+        console.log(val);
+        store.names = val.split('\n');
+      },
+    },
+    'wheelSettings.autoHideNames': {
+      handler(val) {
+        store.autoHideNames = val;
+      },
+    },
+    'wheelSettings.hiddenNames': {
+      handler(val) {
+        store.hiddenNames = val.split('\n');
+      },
+    },
   },
 };
 </script>

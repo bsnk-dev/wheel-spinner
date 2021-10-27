@@ -247,7 +247,7 @@
 </template>
 
 <script>
-import store from '@/store.js';
+import store from '@/store';
 
 export default {
   name: 'SettingsPane',
@@ -273,29 +273,43 @@ export default {
   watch: {
     'developer.overrideNames': {
       handler(val) {
-        store.developerOverride = val;
+        store = {
+          ...store,
+          developerOverride: val,
+        }
       },
     },
     'developer.nameCount': {
       handler(val) {
-        store.developerOverrideNameCount = Number(val);
+        store = {
+          ...store,
+          developerOverrideNameCount: Number(val),
+        }
       },
     },
 
     'wheelSettings.names': {
       handler(val) {
-        console.log(val);
-        store.names = val.split('\n');
+        store = {
+          ...store,
+          names: val.split('\n'),
+        }
       },
     },
     'wheelSettings.autoHideNames': {
       handler(val) {
-        store.autoHideNames = val;
+        store = {
+          ...store,
+          autoHideNames: val
+        }
       },
     },
     'wheelSettings.hiddenNames': {
       handler(val) {
-        store.hiddenNames = val.split('\n');
+        store = {
+          ...store,
+          hiddenNames: val.split('\n'),
+        }
       },
     },
   },

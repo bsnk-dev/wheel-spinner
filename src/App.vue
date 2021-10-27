@@ -14,6 +14,7 @@
         <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
       </div>
     </div>
+    {{ JSON.stringify(store) }}
   </div>
 </template>
 
@@ -32,7 +33,7 @@ export default {
   data() {
     return {
       selectedName: 'Click to spin',
-      storedNames: [],
+      storedNames: ['Name1', 'Name2', 'Name3'],
       store,
     };
   },
@@ -60,15 +61,15 @@ export default {
   },
 
   watch: {
-    'store.names': {
+    store: {
       handler(val) {
-        this.storedNames = val;
+        alert(1);
+        this.storedNames = Array(...val.names);
       },
 
       deep: true,
-  
     }
-  }
+  },
 };
 </script>
 

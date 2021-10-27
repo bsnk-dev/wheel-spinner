@@ -247,8 +247,6 @@
 </template>
 
 <script>
-import store from '@/store';
-
 export default {
   name: 'SettingsPane',
 
@@ -273,43 +271,28 @@ export default {
   watch: {
     'developer.overrideNames': {
       handler(val) {
-        store = {
-          ...store,
-          developerOverride: val,
-        }
+        this.$store.commit('setDeveloperOverride', val);
       },
     },
     'developer.nameCount': {
       handler(val) {
-        store = {
-          ...store,
-          developerOverrideNameCount: Number(val),
-        }
+        this.$store.commit('setDeveloperOverrideNameCount', Number(val));
       },
     },
 
     'wheelSettings.names': {
       handler(val) {
-        store = {
-          ...store,
-          names: val.split('\n'),
-        }
+        this.$store.commit('setNames', val.split(/\n/g));
       },
     },
     'wheelSettings.autoHideNames': {
       handler(val) {
-        store = {
-          ...store,
-          autoHideNames: val
-        }
+        this.$store.commit('setAutoHideNames', val);
       },
     },
     'wheelSettings.hiddenNames': {
       handler(val) {
-        store = {
-          ...store,
-          hiddenNames: val.split('\n'),
-        }
+        this.$store.commit('setHiddenNames', val.split('\n'));
       },
     },
   },

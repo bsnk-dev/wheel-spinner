@@ -36,7 +36,6 @@ export default {
   data() {
     return {
       degrees: 0,
-      numberOfNames: 10,
       colorIndex: -1,
       selectedName: '',
     };
@@ -46,6 +45,12 @@ export default {
     names: {
       type: Array,
       default: () => ['Name One', 'Two', 'Three', 'Four Five', 'Six'],
+    },
+  },
+
+  computed: {
+    numberOfNames() {
+      return this.names.length;
     },
   },
 
@@ -95,10 +100,6 @@ export default {
 
       this.selectedName = this.names[index];
     },
-  },
-
-  mounted() {
-    this.numberOfNames = this.names.length;
   },
 
   watch: {

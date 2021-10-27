@@ -8,20 +8,18 @@
     <div class="wheel-name-container">
       <wheel
         :names="devOverride ? names(devNameCount) : storedNames"
-        @change="selectedName = $event"
+        @change="selectedName = $event; $store.dispatch('hideName', {name: $event})"
       />
       <div>
         <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
       </div>
     </div>
-    {{ JSON.stringify(store) }}
   </div>
 </template>
 
 <script>
 import Wheel from './components/Wheel.vue';
 import Settings from './components/SettingsPane.vue';
-import store from '@/store.js';
 
 export default {
   name: 'App',
@@ -33,18 +31,20 @@ export default {
   data() {
     return {
       selectedName: 'Click to spin',
-      storedNames: ['Name1', 'Name2', 'Name3'],
-      store,
     };
   },
 
   computed: {
-    devNameCount() {
-      return this.store.developerOverrideNameCount;
-    },
-
     devOverride() {
-      return this.store.developerOverride;
+      return this.$store.getters.developerOverride;
+    },
+    devNameCount() {
+      return this.$store.getters.developerOverrideNameCount;
+    },
+    storedNames() {
+      const names = this.$store.getters.names;
+
+      return (names.length) ? names : ['1', '2', '3'];
     },
   },
 
@@ -58,17 +58,6 @@ export default {
 
       return names;
     },
-  },
-
-  watch: {
-    store: {
-      handler(val) {
-        alert(1);
-        this.storedNames = Array(...val.names);
-      },
-
-      deep: true,
-    }
   },
 };
 </script>

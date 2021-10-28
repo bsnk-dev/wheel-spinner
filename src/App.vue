@@ -8,7 +8,8 @@
     <div class="wheel-name-container">
       <wheel
         :names="devOverride ? names(devNameCount) : storedNames"
-        @change="selectedName = $event; $store.dispatch('hideName', {name: $event})"
+        @change="selectedName = $event; hideName($event)"
+        @doneSpinning="selectedName += '!'"
       />
       <div>
         <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
@@ -42,10 +43,14 @@ export default {
       return this.$store.getters.developerOverrideNameCount;
     },
     storedNames() {
-      const names = this.$store.getters.names;
+      let names = this.$store.getters.names;
 
-      return (names.length) ? names : ['1', '2', '3'];
+      names = (names.length) ? names : ['1', '2', '3'];
+      return names.filter((n) => !this.hiddenNames.includes(n));
     },
+    hiddenNames() {
+      return this.$store.getters.hiddenNames;
+    }
   },
 
   methods: {
@@ -58,6 +63,12 @@ export default {
 
       return names;
     },
+
+    hideName(name) {
+      if (this.$store.state.autoHideNames) {
+        this.$store.dispatch('hideName', {name});
+      }
+    }
   },
 };
 </script>

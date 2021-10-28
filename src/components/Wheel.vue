@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; flex-direction: column">
     <div class="wheel-needle-container">
-      <div class="wheel-container" ref="wheel" @click="spinWheel()">
+      <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning')">
         <div
           class="wedge"
           :style="{

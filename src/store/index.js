@@ -44,8 +44,7 @@ export default createStore({
   },
   actions: {
     hideName({ state, commit }, payload) {
-      commit('setNames', state.names.filter((name) => name != payload.name));
-      commit('setHiddenNames', state.names.concat([payload.name]));
+      commit('setHiddenNames', state.hiddenNames.concat([payload.name]));
     }
   },
   modules: {

@@ -268,6 +268,12 @@ export default {
     };
   },
 
+  computed: {
+    hiddenNames() {
+      return this.$store.getters.hiddenNames;
+    }
+  },
+
   watch: {
     'developer.overrideNames': {
       handler(val) {
@@ -295,6 +301,9 @@ export default {
         this.$store.commit('setHiddenNames', val.split('\n'));
       },
     },
+    hiddenNames(val) {
+      this.wheelSettings.hiddenNames = val.join('\n');
+    }
   },
 };
 </script>

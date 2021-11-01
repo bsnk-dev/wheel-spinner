@@ -15,7 +15,7 @@
         <h1 class="font-sans text-2xl font-bold">{{ (!spinning) ? 'Click to spin' : 'Spinning...' }}</h1>
       </div>
     </div>
-    <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning"/>
+    <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning" @dismissed="selectedName = ''"/>
   </div>
 </template>
 

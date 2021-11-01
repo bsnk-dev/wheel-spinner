@@ -1,6 +1,28 @@
 <template>
     <div class="celebration-overlay">
-        {{ name }}
+        <div>{{ name }}</div>
+        <div>
+            <button
+            type="button"
+            class="
+                inline-flex
+                justify-center
+                rounded-md
+                px-4
+                py-2
+                text-sm
+                p-8
+                font-medium
+                text-white-700
+                bg-gray-400
+                hover:bg-gray-300
+                bg-opacity-25
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                font-bold
+            "
+            @click="$emit('dismissed')"
+            >Close</button>
+        </div>
     </div>
 </template>
 

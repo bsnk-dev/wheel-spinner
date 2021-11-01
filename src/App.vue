@@ -8,30 +8,34 @@
     <div class="wheel-name-container">
       <wheel
         :names="devOverride ? names(devNameCount) : storedNames"
-        @change="selectedName = $event; hideName($event)"
-        @doneSpinning="selectedName += '!'"
+        @change="selectedName = $event; spinning = true"
+        @doneSpinning="hideName(selectedName); selectedName += '!'; spinning = false;"
       />
       <div>
-        <h1 class="font-sans text-2xl font-bold">{{ selectedName }}</h1>
+        <h1 class="font-sans text-2xl font-bold">{{ (!spinning) ? 'Click to spin' : 'Spinning...' }}</h1>
       </div>
     </div>
+    <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning"/>
   </div>
 </template>
 
 <script>
 import Wheel from './components/Wheel.vue';
 import Settings from './components/SettingsPane.vue';
+import NameCelebrationOverlay from './components/NameCelebrationOverlay.vue';
 
 export default {
   name: 'App',
   components: {
     Wheel,
     Settings,
+    NameCelebrationOverlay,
   },
 
   data() {
     return {
-      selectedName: 'Click to spin',
+      selectedName: '',
+      spinning: false,
     };
   },
 

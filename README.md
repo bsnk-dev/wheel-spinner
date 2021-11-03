@@ -4,7 +4,7 @@
 
 ### Todo
  - [] Fix rendering for single and two names
- - [] Make setting page correctly load ALL changes
+ - [x] Make setting page correctly load ALL changes
  - [] Sounds
     - [] Celebration sound
     - [] Clicking sound

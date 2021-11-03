@@ -268,10 +268,25 @@ export default {
     };
   },
 
-  computed: {
-    hiddenNames() {
-      return this.$store.getters.hiddenNames;
-    }
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+        switch (mutation.type) {
+          case 'setHiddenNames':
+            this.wheelSettings.hiddenNames = state.hiddenNames.join('\n');
+            break;
+          case 'setNames':
+            this.wheelSettings.names = state.names.join('\n');
+            break;
+          case 'setAutoHideNames': 
+            this.wheelSettings.autoHideNames = state.autoHideNames;
+            break;
+          case 'setDeveloperOverride':
+            this.developer.overrideNames = state.developerOverride;
+            break;
+          case 'setDeveloperOverrideNameCount':
+            this.developer.nameCount = state.developerOverrideNameCount;
+        }
+    });
   },
 
   watch: {
@@ -306,9 +321,6 @@ export default {
         this.$store.dispatch('saveState');
       },
     },
-    hiddenNames(val) {
-      this.wheelSettings.hiddenNames = val.join('\n');
-    }
   },
 };
 </script>

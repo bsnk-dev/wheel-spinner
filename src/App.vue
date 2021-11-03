@@ -71,9 +71,14 @@ export default {
     hideName(name) {
       if (this.$store.state.autoHideNames) {
         this.$store.dispatch('hideName', {name});
+        this.$store.dispatch('saveState');
       }
     }
   },
+
+  mounted() {
+    this.$store.dispatch('loadState');
+  }
 };
 </script>
 

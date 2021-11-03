@@ -45,6 +45,24 @@ export default createStore({
   actions: {
     hideName({ state, commit }, payload) {
       commit('setHiddenNames', state.hiddenNames.concat([payload.name]));
+    },
+
+    saveState({ state }) {
+      localStorage.setItem('settings', JSON.stringify(state));
+    },
+
+    loadState({ commit, dispatch }) {
+      try {
+        const previousState = JSON.parse(localStorage.getItem('settings'));
+
+        commit('setNames', previousState.names);
+        commit('setHiddenNames', previousState.hiddenNames);
+        commit('setAutoHideNames', previousState.autoHideNames);
+        commit('setDeveloperOverride', previousState.developerOverride);
+        commit('setDeveloperOverrideNameCount', previousState.developerOverrideNameCount);
+      } catch(e) {
+        dispatch('saveState');
+      }
     }
   },
   modules: {

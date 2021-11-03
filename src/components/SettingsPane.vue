@@ -278,27 +278,32 @@ export default {
     'developer.overrideNames': {
       handler(val) {
         this.$store.commit('setDeveloperOverride', val);
+        this.$store.dispatch('saveState');
       },
     },
     'developer.nameCount': {
       handler(val) {
         this.$store.commit('setDeveloperOverrideNameCount', Number(val));
+        this.$store.dispatch('saveState');
       },
     },
 
     'wheelSettings.names': {
       handler(val) {
         this.$store.commit('setNames', val.split(/\n/g));
+        this.$store.dispatch('saveState');
       },
     },
     'wheelSettings.autoHideNames': {
       handler(val) {
         this.$store.commit('setAutoHideNames', val);
+        this.$store.dispatch('saveState');
       },
     },
     'wheelSettings.hiddenNames': {
       handler(val) {
         this.$store.commit('setHiddenNames', val.split('\n'));
+        this.$store.dispatch('saveState');
       },
     },
     hiddenNames(val) {

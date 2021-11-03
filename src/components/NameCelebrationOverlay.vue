@@ -12,7 +12,6 @@
                 py-2
                 text-sm
                 p-8
-                font-medium
                 text-white-700
                 bg-gray-400
                 hover:bg-gray-300

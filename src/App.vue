@@ -1,18 +1,20 @@
 <template>
   <div id="app flex-column">
-    <div class="flex w-screen">
+    <div class="flex w-screen-99">
       <div class="ml-auto p-4">
         <Settings />
       </div>
     </div>
-    <div class="wheel-name-container">
-      <wheel
-        :names="devOverride ? names(devNameCount) : storedNames"
-        @change="selectedName = $event; spinning = true"
-        @doneSpinning="hideName(selectedName); selectedName += '!'; spinning = false;"
-      />
-      <div>
-        <h1 class="font-sans text-2xl font-bold">{{ (!spinning) ? 'Click to spin' : 'Spinning...' }}</h1>
+    <div class="flex h-full w-screen-99">
+      <div class="wheel-name-container sm:ml-20 lg:ml-10">
+        <wheel
+          :names="devOverride ? names(devNameCount) : storedNames"
+          @change="selectedName = $event; spinning = true"
+          @doneSpinning="hideName(selectedName); selectedName += '!'; spinning = false;"
+        />
+        <div>
+          <h1 class="font-sans text-2xl font-bold">{{ (!spinning) ? 'Click to spin' : 'Spinning...' }}</h1>
+        </div>
       </div>
     </div>
     <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning" @dismissed="selectedName = ''"/>
@@ -92,7 +94,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   display: flex;
-  width: 99vw;
   height: 100vh;
   font-family: 'Inter', sans-serif;
 }
@@ -109,8 +110,11 @@ body {
 .wheel-name-container {
   display: flex;
   margin: auto;
-  margin-left: 15vw;
   align-items: center;
   min-width: 700px;
+}
+
+.w-screen-99 {
+  width: 99vw;
 }
 </style>

@@ -3,7 +3,11 @@
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning');">
         <div
-          :class="numberOfNames > 2 ? 'wedge' : 'square'"
+          :class="{
+            wedge: numberOfNames > 2,
+            square: numberOfNames <= 2,
+            single: numberOfNames == 1 
+          }"
           :style="{
             transform: 'rotate(' + i * (360 / numberOfNames) + 'deg)',
             'border-top-width':
@@ -14,8 +18,8 @@
               (3.14 * (300 + circumferenceInset(numberOfNames))) /
                 numberOfNames +
               'px',
-            'border-right-color': wedgeColor(),
-            'border-color': (numberOfNames <= 2) ? wedgeColor() : '',
+            'border-color': (numberOfNames <= 2) ? wedgeColor(i) : 'transparent',
+            'border-right-color': wedgeColor(i),
           }"
           v-for="i of numberOfNames"
           :key="i"
@@ -37,7 +41,6 @@ export default {
   data() {
     return {
       degrees: 0,
-      colorIndex: -1,
       selectedName: '',
     };
   },
@@ -67,11 +70,9 @@ export default {
       this.getSelectedName();
     },
 
-    wedgeColor() {
+    wedgeColor(index) {
       const colors = ['#59CD90', '#EE6352', '#3FA7D6', '#FAC05E', '#F79D84'];
-      this.colorIndex++;
-      if (this.colorIndex >= colors.length) this.colorIndex = 0;
-      return colors[this.colorIndex];
+      return colors[index - 1 % colors.length];
     },
 
     /**
@@ -179,5 +180,10 @@ export default {
   width: 100%;
   height: 100%;
   border-style: solid;
+}
+
+.square.single {
+  padding-left: 10%;
+  left: 0%;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning');">
         <div
-          class="wedge"
+          :class="numberOfNames > 2 ? 'wedge' : 'square'"
           :style="{
             transform: 'rotate(' + i * (360 / numberOfNames) + 'deg)',
             'border-top-width':
@@ -15,6 +15,7 @@
                 numberOfNames +
               'px',
             'border-right-color': wedgeColor(),
+            'border-color': (numberOfNames <= 2) ? wedgeColor() : '',
           }"
           v-for="i of numberOfNames"
           :key="i"
@@ -99,11 +100,6 @@ export default {
       if (index === -1) index = this.names.length - 1;
 
       this.selectedName = this.names[index];
-    },
-  },
-
-  watch: {
-    selectedName() {
       this.$emit('change', this.selectedName);
     },
   },
@@ -175,19 +171,13 @@ export default {
   border-left: none;
 }
 
-.wedge.red {
-  border-right-color: red;
-}
-
-.wedge.blue {
-  border-right-color: blue;
-}
-
-.wedge.green {
-  border-right-color: green;
-}
-
-.wedge.yellow {
-  border-right-color: yellow;
+.square {
+  color: black;
+  position: absolute;
+  left: 50%;
+  transform-origin: center left;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
 }
 </style>

@@ -63,7 +63,7 @@ export default {
     names(num) {
       const names = [];
 
-      for (let i = 1; i < num; i++) {
+      for (let i = 1; i <= num; i++) {
         names.push(i);
       }
 

@@ -94,7 +94,7 @@ export default {
 
       const degreeInterval = 360 / this.numberOfNames;
       const wedge =
-        (360 - currentDegrees + degreeInterval * 0.4) / degreeInterval;
+        (360 - currentDegrees + (degreeInterval * 0.3)) / degreeInterval;
       let index = Math.floor(wedge);
       index--;
 

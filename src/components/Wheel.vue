@@ -72,7 +72,7 @@ export default {
 
     wedgeColor(index) {
       const colors = ['#59CD90', '#EE6352', '#3FA7D6', '#FAC05E', '#F79D84'];
-      return colors[index - 1 % colors.length];
+      return colors[((index - 1) % colors.length) || 0];
     },
 
     /**

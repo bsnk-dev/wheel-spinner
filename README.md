@@ -1,6 +1,5 @@
-# vue-w5hftu
-
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/vue-w5hftu)
+# Wheel Spinner
+It's just an example spinner that allows you to put names in a wheel, hide names without deleting them, auto-hide selected names, and automatically save your settings. In addition it has confetti.
 
 ### Todo
  - [x] Fix rendering for single and two names

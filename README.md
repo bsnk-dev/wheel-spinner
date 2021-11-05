@@ -7,7 +7,7 @@
    - [x] Two names
    - [x] Single name
  - [x] Make setting page correctly load ALL changes
- - [ ] Fix selection direction bias magic number
+ - [x] Fix selection direction bias magic number
  - [ ] Sounds
     - [ ] Celebration sound
     - [ ] Clicking sound

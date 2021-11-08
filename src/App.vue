@@ -82,7 +82,7 @@ export default {
     voiceCommands() {
       window.SPEECH.addVoiceCommands([
         {
-            command: "spin wheel",
+            command: "spin the wheel",
             callback: () => {
                 this.$refs.wheel.spinWheel();
             },

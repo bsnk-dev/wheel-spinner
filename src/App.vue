@@ -87,13 +87,13 @@ export default {
                 this.$refs.wheel.spinWheel();
                 alert(1)
             },
-            min_confidence: .3 // you can set a confidence level for each command individually
+            min_confidence: .3
         },
       ]);
 
       window.SPEECH.start({
           min_confidence: .3,
-          lang: 'en-US' // defaults to HTML lang attribute value, or user agent's language
+          lang: 'en-US'
       });
     },
   },

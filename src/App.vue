@@ -11,6 +11,7 @@
           :names="devOverride ? names(devNameCount) : storedNames"
           @change="selectedName = $event; spinning = true"
           @doneSpinning="hideName(selectedName); selectedName += '!'; spinning = false;"
+          ref="wheel"
         />
         <div>
           <h1 class="font-sans text-2xl font-bold">{{ (!spinning) ? 'Click to spin' : 'Spinning...' }}</h1>
@@ -25,6 +26,7 @@
 import Wheel from './components/Wheel.vue';
 import Settings from './components/SettingsPane.vue';
 import NameCelebrationOverlay from './components/NameCelebrationOverlay.vue';
+import 'voice-commands.js';
 
 export default {
   name: 'App',
@@ -75,11 +77,30 @@ export default {
         this.$store.dispatch('hideName', {name});
         this.$store.dispatch('saveState');
       }
-    }
+    },
+
+    voiceCommands() {
+      window.SPEECH.addVoiceCommands([
+        {
+            command: "spin wheel",
+            callback: function() {
+                this.$refs.wheel.spinWheel();
+                alert(1)
+            },
+            min_confidence: .3 // you can set a confidence level for each command individually
+        },
+      ]);
+
+      window.SPEECH.start({
+          min_confidence: .3,
+          lang: 'en-US' // defaults to HTML lang attribute value, or user agent's language
+      });
+    },
   },
 
   mounted() {
     this.$store.dispatch('loadState');
+    try { this.voiceCommands(); } catch(e) { alert(e.stack) }
   }
 };
 </script>

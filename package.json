@@ -15,6 +15,7 @@
     "canvas-confetti": "^1.4.0",
     "postcss": "8.3.6",
     "tailwindcss": "^2.2.15",
+    "voice-commands.js": "^1.1.0",
     "vue": "3.2.11",
     "vuex": "^4.0.0-0"
   },

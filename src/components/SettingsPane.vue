@@ -231,7 +231,7 @@
               <input
                 type="range"
                 min="0"
-                max="90"
+                max="900"
                 v-model="developer.nameCount"
               />
               <span class="ml-2 text-gray-700 text-sm">

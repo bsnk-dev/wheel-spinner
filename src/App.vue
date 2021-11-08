@@ -83,9 +83,8 @@ export default {
       window.SPEECH.addVoiceCommands([
         {
             command: "spin wheel",
-            callback: function() {
+            callback: () => {
                 this.$refs.wheel.spinWheel();
-                alert(1)
             },
             min_confidence: .3
         },

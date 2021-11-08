@@ -88,6 +88,14 @@ export default {
             },
             min_confidence: .3
         },
+        {
+            command: "wheel of names",
+            callback: () => {
+                this.$refs.wheel.spinWheel();
+                this.$refs.wheel.spinWheel();
+            },
+            min_confidence: .3
+        },
       ]);
 
       window.SPEECH.start({

@@ -238,6 +238,20 @@
                 Name Count: {{ developer.nameCount }}
               </span>
             </label>
+            <label class="inline-flex items-center mt-3">
+              <input
+                type="checkbox"
+                class="
+                  form-checkbox
+                  h-5
+                  w-5
+                  text-green-400
+                  rounded-md
+                  focus:ring-green-500 focus:border-green-500
+                "
+                v-model="developer.speechRecognition"
+              /><span class="ml-2 text-gray-700 text-sm">Enable Speech Recognition</span>
+            </label>
           </div>
         </div>
       </div>
@@ -257,6 +271,7 @@ export default {
       developer: {
         overrideNames: false,
         nameCount: 16,
+        speechRecognition: false,
       },
 
       wheelSettings: {
@@ -298,6 +313,12 @@ export default {
     'developer.nameCount': {
       handler(val) {
         this.$store.commit('setDeveloperOverrideNameCount', Number(val));
+        this.$store.dispatch('saveState');
+      },
+    },
+    'developer.speechRecognition': {
+      handler(val) {
+        this.$store.commit('setSpeechRecognition', val);
         this.$store.dispatch('saveState');
       },
     },

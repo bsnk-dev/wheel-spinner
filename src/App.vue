@@ -58,6 +58,9 @@ export default {
     },
     hiddenNames() {
       return this.$store.getters.hiddenNames;
+    },
+    speechRecognition() {
+      return this.$store.getters.speechRecognition;
     }
   },
 
@@ -107,11 +110,24 @@ export default {
           lang: 'en-US'
       });
     },
+
+    disableVoiceCommands() {
+      window.SPEECH.stop();
+    }
   },
 
   mounted() {
     this.$store.dispatch('loadState');
-    try { this.voiceCommands(); } catch(e) { alert(e.stack) }
+  },
+
+  watch: {
+    speechRecognition(val) {
+      if (val) {
+         try { this.voiceCommands(); } catch(e) { alert(e.stack) }
+      } else {
+        this.disableVoiceCommands();
+      }
+    }
   }
 };
 </script>

@@ -7,6 +7,7 @@ export default createStore({
     hiddenNames: [],
     developerOverride: false,
     developerOverrideNameCount: 16,
+    speechRecognition: false,
   },
   getters: {
     names(state) {
@@ -24,6 +25,9 @@ export default createStore({
     developerOverrideNameCount(state) {
       return state.developerOverrideNameCount;
     },
+    speechRecognition(state) {
+      return state.speechRecognition;
+    }
   },
   mutations: {
     setNames(state, newNames) {
@@ -40,6 +44,9 @@ export default createStore({
     },
     setDeveloperOverrideNameCount(state, developerOverrideNameCount) {
       state.developerOverrideNameCount = developerOverrideNameCount;
+    },
+    setSpeechRecognition(state, speechRecognition) {
+      state.speechRecognition = speechRecognition;
     }
   },
   actions: {

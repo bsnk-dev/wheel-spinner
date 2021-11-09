@@ -112,7 +112,7 @@ export default {
     },
 
     reverseIndex(index, length) {
-      return length - 1 - index;
+      return Math.abs(length - 1 - index);
     },
 
     setSelectedName(expectedName) {

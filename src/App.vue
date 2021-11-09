@@ -98,6 +98,10 @@ export default {
         },
       ]);
 
+      window.SPEECH.onResult((result) => {
+        this.$refs.wheel.speechRecognitionToSelectedNameAnalysisHandler(result.transcript);
+      });
+
       window.SPEECH.start({
           min_confidence: .3,
           lang: 'en-US'

@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; flex-direction: column">
     <div class="wheel-needle-container">
-      <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning');">
+      <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning'); this.speechRecognitionMutex = false;">
         <div
           :class="{
             wedge: numberOfNames > 2,
@@ -42,6 +42,7 @@ export default {
     return {
       degrees: 0,
       selectedName: '',
+      speechRecognitionMutex: false,
     };
   },
 
@@ -89,8 +90,8 @@ export default {
       );
     },
 
-    getSelectedName() {
-      let currentDegrees = this.degrees % 360;
+    calculateSelectedName(degrees) {
+      let currentDegrees = degrees % 360;
 
       const degreeInterval = 360 / this.numberOfNames;
       const wedge =
@@ -100,9 +101,66 @@ export default {
 
       if (index === -1) index = this.names.length - 1;
 
+      return index;
+    },
+
+    getSelectedName() {
+      const index = this.calculateSelectedName(this.degrees);
+
       this.selectedName = this.names[index];
       this.$emit('change', this.selectedName);
     },
+
+    reverseIndex(index, length) {
+      return length - 1 - index;
+    },
+
+    setSelectedName(expectedName) {
+      if (this.speechRecognitionMutex) return;
+      this.speechRecognitionMutex = true;
+
+      const degreeInterval = 360 / this.numberOfNames;
+      let currentNameIndex = this.reverseIndex(this.calculateSelectedName(this.degrees), this.names.length);
+
+      let expectedNameIndex;
+
+      for (const [index, name] of Object.entries(this.names)) {
+        if (name == expectedName) {
+          expectedNameIndex = this.reverseIndex(Number(index), this.names.length);
+        }
+      }
+
+      let expectedNameIndexIncrease = expectedNameIndex - currentNameIndex;
+      if (expectedNameIndex < currentNameIndex) {
+        expectedNameIndexIncrease += this.names.length - 1;
+      } else {
+        currentNameIndex++;
+      }
+
+      console.table({
+        expectedNameIndexIncrease,
+        expectedNameIndex,
+        currentNameIndex,
+        currentName: this.names[currentNameIndex]
+      })
+
+      this.degrees += degreeInterval * expectedNameIndexIncrease;
+      this.selectedName = expectedName;
+      this.$emit('change', this.selectedName);
+      this.$refs.wheel.style.transform = 'rotate(' + this.degrees + 'deg)';
+    },
+
+    speechRecognitionToSelectedNameAnalysisHandler(text) {
+      for (const name of this.names) {
+        if (name.toString().toLowerCase().trim() == text.toString().toLowerCase().trim()) {
+          try {
+            this.setSelectedName(name);
+          } catch(e) {
+            this.speechRecognitionMutex = false;
+          }
+        }
+      }
+    }
   },
 };
 </script>

@@ -10,7 +10,7 @@
         <wheel
           :names="devOverride ? names(devNameCount) : storedNames"
           @change="selectedName = $event; spinning = true"
-          @doneSpinning="hideName(selectedName); selectedName += '!'; spinning = false;"
+          @doneSpinning="selectedName += '!'; spinning = false;"
           ref="wheel"
         />
         <div>
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning" @dismissed="selectedName = ''"/>
+    <name-celebration-overlay :name="selectedName" v-if="selectedName != '' && !spinning" @dismissed="hideName(selectedName); selectedName = ''"/>
   </div>
 </template>
 

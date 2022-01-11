@@ -1,5 +1,9 @@
 <template>
   <div style="display: flex; flex-direction: column">
+    <button v-if="debugMode" style="position: fixed; top: 100px; left: 20px;" @click="debugKeyPress()"> 
+      {{ debugText }}
+    </button>
+
     <div class="wheel-needle-container">
       <div class="wheel-container" ref="wheel" @click="spinWheel()" @transitionend="$emit('doneSpinning'); this.speechRecognitionMutex = false;">
         <div
@@ -43,6 +47,9 @@ export default {
       degrees: 0,
       selectedName: '',
       speechRecognitionMutex: false,
+
+      debugMode: false,
+      debugText: 'Debug Text',
     };
   },
 
@@ -95,13 +102,19 @@ export default {
 
       const degreeInterval = 360 / this.numberOfNames;
       const wedge =
-        (360 - currentDegrees + (degreeInterval * 0.3)) / degreeInterval;
+        (360 - currentDegrees + (degreeInterval * 0.45)) / degreeInterval;
       let index = Math.floor(wedge);
       index--;
 
       if (index === -1) index = this.names.length - 1;
 
       return index;
+    },
+
+    debugKeyPress() {
+      this.degrees += 10
+      this.$refs.wheel.style.transform = 'rotate(' + this.degrees + 'deg)';
+      this.debugText = this.names[this.calculateSelectedName(this.degrees)]
     },
 
     getSelectedName() {
